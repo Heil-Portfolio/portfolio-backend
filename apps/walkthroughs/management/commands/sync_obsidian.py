@@ -2,13 +2,53 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 import frontmatter
 import os
+import re
+import cloudinary
+import cloudinary.uploader
 from apps.walkthroughs.models import Walkthrough
 from apps.journal.models import JournalEntry
+
+# Repère les images markdown : ![alt](chemin)
+IMAGE_PATTERN = re.compile(r'!\[([^\]]*)\]\(([^)]+)\)')
+
+
+def _upload_and_rewrite_images(content, base_dir, cloudinary_folder, stdout):
+    """Pour chaque image locale référencée dans le markdown, l'upload vers
+    Cloudinary (idempotent : même public_id = écrasement, pas de doublon)
+    et remplace le chemin local par l'URL Cloudinary."""
+    def repl(match):
+        alt, path = match.group(1), match.group(2)
+        if path.startswith(('http://', 'https://')):
+            return match.group(0)  # déjà une URL absolue, on ne touche pas
+        local_path = base_dir / path
+        if not local_path.exists():
+            stdout.write(f'  [WARN] image introuvable, ignorée : {local_path}')
+            return match.group(0)
+        public_id = f'{cloudinary_folder}/{local_path.stem}'
+        try:
+            result = cloudinary.uploader.upload(
+                str(local_path),
+                public_id=public_id,
+                overwrite=True,
+                unique_filename=False,
+            )
+        except Exception as e:
+            stdout.write(f'  [ERROR] upload Cloudinary échoué pour {local_path.name} : {e}')
+            return match.group(0)
+        return f'![{alt}]({result["secure_url"]})'
+    return IMAGE_PATTERN.sub(repl, content)
+
 
 class Command(BaseCommand):
     help = 'Synchronise le vault Obsidian vers la base de données'
 
     def handle(self, *args, **kwargs):
+        cloudinary.config(
+            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+            api_key=settings.CLOUDINARY_API_KEY,
+            api_secret=settings.CLOUDINARY_API_SECRET,
+            secure=True,
+        )
         self._sync_walkthroughs()
         self._sync_journal()
         self.stdout.write(self.style.SUCCESS('Sync terminé !'))
@@ -25,6 +65,9 @@ class Command(BaseCommand):
                 post = frontmatter.load(f)
             meta = post.metadata
             slug = meta.get('slug') or md_file.stem
+            content = _upload_and_rewrite_images(
+                post.content, wt_dir, f'portfolio/walkthroughs/{slug}', self.stdout
+            )
             obj, created = Walkthrough.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -37,7 +80,7 @@ class Command(BaseCommand):
                     'problems_encountered': meta.get('problems_encountered', ''),
                     'lessons_learned': meta.get('lessons_learned', []),
                     'reading_time': meta.get('reading_time', 0),
-                    'content': post.content,
+                    'content': content,
                     'obsidian_file': f'walkthroughs/{md_file.name}',
                 }
             )

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_template.md",
+                "file": "dreamhouse237-aws-architecture.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "_template"
+              "title": "dreamhouse237-aws-architecture"
             }
           }
         ]
@@ -185,6 +185,7 @@
   },
   "active": "41a0cb4ca039aab1",
   "lastOpenFiles": [
+    "_template.md",
     "test.md",
     "_template (Copy).md"
   ]
