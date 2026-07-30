@@ -1,19 +1,27 @@
 ---
-title: "DreamHouse-237 — Deploying a Real Microservices Architecture on AWS Free Tier"
+title: DreamHouse-237 — Deploying a Real Microservices Architecture on AWS Free Tier
 slug: dreamhouse237-aws-architecture
 status: published
-tags: [AWS, Microservices, Architecture, EC2, RDS, Docker, Free Tier]
-objective: "Deploy 9 microservices (Django, Spring Boot, NestJS, Flask) plus supporting infra (Eureka, RabbitMQ, Gateway, Traefik) on AWS Free Tier without spending a single dollar — and without losing my sanity."
-stack: "AWS EC2, RDS MySQL, Traefik, Docker Compose, GitHub Actions, Docker Hub, swap memory"
-architecture: "See attached diagram"
-problems_encountered: "Mysterious instance crashes mistaken for attacks, actually caused by Free Tier resource limits (1GB RAM/CPU); exposed RabbitMQ port found by internet scanners"
+tags:
+  - AWS
+  - Microservices
+  - Architecture
+  - EC2
+  - RDS
+  - Docker
+  - Free Tier
+objective: Deploy 9 microservices (Django, Spring Boot, NestJS, Flask) plus supporting infra (Eureka, RabbitMQ, Gateway, Traefik) on AWS Free Tier without spending a single dollar — and without losing my sanity.
+stack: AWS EC2, RDS MySQL, Traefik, Docker Compose, GitHub Actions, Docker Hub, swap memory
+architecture: See attached diagram
+problems_encountered: Mysterious instance crashes mistaken for attacks, actually caused by Free Tier resource limits (1GB RAM/CPU); exposed RabbitMQ port found by internet scanners
 lessons_learned:
-  - "Check your server's metrics before assuming someone is attacking you"
-  - "AWS Free Tier allows more than one EC2 instance — the real limit is total hours, not instance count"
-  - "Swap memory is a normal tool for small servers, not a cheat code"
-  - "Give each container a resource limit, or one bad container can crash everything"
-  - "Don't leave random ports open to the whole internet — scanners will find them fast"
+  - Check your server's metrics before assuming someone is attacking you
+  - AWS Free Tier allows more than one EC2 instance — the real limit is total hours, not instance count
+  - Swap memory is a normal tool for small servers, not a cheat code
+  - Give each container a resource limit, or one bad container can crash everything
+  - Don't leave random ports open to the whole internet — scanners will find them fast
 reading_time: 14
+date: 2026-07-20
 ---
 
 ## Why I put myself through this

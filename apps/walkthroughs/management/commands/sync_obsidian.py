@@ -5,11 +5,28 @@ import os
 import re
 import cloudinary
 import cloudinary.uploader
+from datetime import datetime, timezone
 from apps.walkthroughs.models import Walkthrough
 from apps.journal.models import JournalEntry
 
 # Repère les images markdown : ![alt](chemin)
 IMAGE_PATTERN = re.compile(r'!\[([^\]]*)\]\(([^)]+)\)')
+
+
+def _parse_date(value):
+    """Parse le champ `date` du frontmatter (str 'YYYY-MM-DD' ou objet date/datetime)
+    en datetime timezone-aware. Retourne None si absent/invalide."""
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    try:
+        # frontmatter/PyYAML retourne parfois un objet `date` (pas `datetime`)
+        if hasattr(value, 'year') and not isinstance(value, str):
+            return datetime(value.year, value.month, value.day, tzinfo=timezone.utc)
+        return datetime.strptime(str(value), '%Y-%m-%d').replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        return None
 
 
 def _upload_and_rewrite_images(content, base_dir, cloudinary_folder, stdout):
@@ -68,6 +85,7 @@ class Command(BaseCommand):
             content = _upload_and_rewrite_images(
                 post.content, wt_dir, f'portfolio/walkthroughs/{slug}', self.stdout
             )
+            published_at = _parse_date(meta.get('date'))
             obj, created = Walkthrough.objects.update_or_create(
                 slug=slug,
                 defaults={
@@ -82,10 +100,11 @@ class Command(BaseCommand):
                     'reading_time': meta.get('reading_time', 0),
                     'content': content,
                     'obsidian_file': f'walkthroughs/{md_file.name}',
+                    'published_at': published_at,
                 }
             )
             action = 'CREATED' if created else 'UPDATED'
-            self.stdout.write(f'[{action}] {slug}')
+            self.stdout.write(f'[{action}] {slug}' + (f' (date: {published_at.date()})' if published_at else ' (⚠ pas de champ `date` dans le frontmatter)'))
 
     def _sync_journal(self):
         journal_dir = settings.CONTENT_DIR / 'journal'

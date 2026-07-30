@@ -25,7 +25,7 @@ class Walkthrough(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-published_at', '-created_at']
+        ordering = ['published_at', 'created_at']
 
     def __str__(self):
         return self.title
