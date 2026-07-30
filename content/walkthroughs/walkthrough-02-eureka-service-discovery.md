@@ -1,17 +1,23 @@
 ---
 title: "DreamHouse-237 — #2: Eureka & Service Discovery, or Why 'UP' Doesn't Mean 'Reachable'"
 slug: dreamhouse237-eureka-service-discovery
-status: draft
-tags: [Eureka, Service-Discovery, Spring-Cloud, NestJS, API-Gateway, Microservices]
-objective: "Get every service to actually find every other service through Eureka + Spring Cloud Gateway — and survive the evening a perfectly healthy service kept returning 404."
-stack: "Spring Cloud Eureka, Spring Cloud Config, Spring Cloud Gateway, NestJS, Docker Compose"
-architecture: "See attached diagram (Gateway → Eureka → services, Config Server feeding shared config to all of them)"
-problems_encountered: "A NestJS service showing UP on Eureka while every request to it 404'd through the Gateway; a payment webhook calling routes in lowercase while the Gateway only knew the uppercase version"
+status: published
+tags:
+  - Eureka
+  - Service-Discovery
+  - Spring-Cloud
+  - NestJS
+  - API-Gateway
+  - Microservices
+objective: Get every service to actually find every other service through Eureka + Spring Cloud Gateway — and survive the evening a perfectly healthy service kept returning 404.
+stack: Spring Cloud Eureka, Spring Cloud Config, Spring Cloud Gateway, NestJS, Docker Compose
+architecture: See attached diagram (Gateway → Eureka → services, Config Server feeding shared config to all of them)
+problems_encountered: A NestJS service showing UP on Eureka while every request to it 404'd through the Gateway; a payment webhook calling routes in lowercase while the Gateway only knew the uppercase version
 lessons_learned:
-  - "Eureka's dashboard tells you a service is alive — it says nothing about whether the Gateway can actually route to it"
-  - "Spring Boot auto-normalizes service names for you; anything outside the Spring ecosystem has to earn that consistency by hand"
-  - "External callers (webhooks, third parties) will never respect your internal naming conventions — plan for that instead of fighting it"
-  - "When a bug 'makes no sense', the dashboard is probably lying to you about what it's actually checking"
+  - Eureka's dashboard tells you a service is alive — it says nothing about whether the Gateway can actually route to it
+  - Spring Boot auto-normalizes service names for you; anything outside the Spring ecosystem has to earn that consistency by hand
+  - External callers (webhooks, third parties) will never respect your internal naming conventions — plan for that instead of fighting it
+  - When a bug 'makes no sense', the dashboard is probably lying to you about what it's actually checking
 reading_time: 11
 ---
 

@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "ddaad38d23b5d68c",
+        "id": "d0a69f6f761ef853",
         "type": "tabs",
         "children": [
           {
-            "id": "41a0cb4ca039aab1",
+            "id": "6204ad097d34dc4a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "dreamhouse237-aws-architecture.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "dreamhouse237-aws-architecture"
+              "title": "New tab"
             }
           }
         ]
@@ -183,7 +179,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "41a0cb4ca039aab1",
+  "active": "6204ad097d34dc4a",
   "lastOpenFiles": [
     "walkthrough-02-eureka-service-discovery.md",
     "dreamhouse237-aws-architecture.md",
