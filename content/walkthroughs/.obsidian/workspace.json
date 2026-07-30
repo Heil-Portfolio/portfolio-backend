@@ -11,10 +11,14 @@
             "id": "6204ad097d34dc4a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "walkthrough-02-eureka-service-discovery.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "walkthrough-02-eureka-service-discovery"
             }
           }
         ]
@@ -181,7 +185,10 @@
   },
   "active": "6204ad097d34dc4a",
   "lastOpenFiles": [
+    "screenshots/dreamhouse237-architecture.png",
+    "screenshots/Screenshot From 2026-07-30 12-39-07.png",
     "walkthrough-02-eureka-service-discovery.md",
+    "walkthrough-02-eureka-service-discovery(1).md",
     "dreamhouse237-aws-architecture.md",
     "_template.md",
     "test.md",
