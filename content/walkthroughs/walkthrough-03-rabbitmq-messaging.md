@@ -1,7 +1,7 @@
 ---
 title: "DreamHouse-237 — #3: RabbitMQ & Messaging, and the Night I Found Strangers in My Logs"
 slug: dreamhouse237-rabbitmq-messaging
-status: draft
+status: published
 tags:
   - RabbitMQ
   - Messaging
