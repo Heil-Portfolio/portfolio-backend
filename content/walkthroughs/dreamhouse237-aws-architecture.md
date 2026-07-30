@@ -28,7 +28,7 @@ date: 2026-07-20
 
 Let's be real: deploying **9 microservices** on AWS with a budget of $0 is asking for trouble.
 
-But that's the whole point. DreamHouse-237 is my real estate platform project (basically a tiny Zillow clone). I didn't just want "it works on my laptop." I wanted the real thing — real cloud infrastructure, real bugs, and yes, real panic at 11pm wondering why everything was on fire.
+But that's the whole point. DreamHouse-237 is my mates and i  real estate platform project (basically a tiny Zillow clone). We didn't just want "it works on our laptops." we wanted the real thing — real cloud infrastructure, real bugs, and yes, real panic at 11pm wondering why everything was on fire.
 
 I got exactly that. Some nights I genuinely wanted to close the laptop and pretend AWS didn't exist. But I survived, I learned a lot, and looking back, I'm actually a little proud of how messy this journey was. Messy means real.
 

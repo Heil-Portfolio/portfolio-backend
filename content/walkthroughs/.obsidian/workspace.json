@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -185,9 +187,17 @@
   },
   "active": "6204ad097d34dc4a",
   "lastOpenFiles": [
-    "walkthrough-02-eureka-service-discovery.md",
-    "dreamhouse237-aws-architecture.md",
+    "screenshots/dreamhouse237-architecture-diagram.png",
+    "walkthrough-03-rabbitmq-messaging.md",
     "screenshots/dreamhouse237-architecture.png",
+    "screenshots/dreamhouse237-architecture1.png",
+    "screenshots/Screenshot From 2026-07-30 21-57-11.png",
+    "screenshots/Screenshot From 2026-07-30 21-55-30.png",
+    "walkthrough-03-rabbitmq-messaging 1.md",
+    "dreamhouse237-aws-architecture.md",
+    "walkthrough-03-rabbitmq-messaging 2.md",
+    "api-gateway-eureka-architecture.drawio",
+    "walkthrough-02-eureka-service-discovery.md",
     "screenshots/Screenshot From 2026-07-30 12-39-07.png",
     "walkthrough-02-eureka-service-discovery(1).md",
     "_template.md",
