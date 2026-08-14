@@ -220,3 +220,25 @@ h1 .accent{color:var(--pulse);}
   .adjacent .next{text-align:left;}
   .footer{padding:18px 20px;flex-direction:column;align-items:flex-start;}
 }
+
+/* ============================================================
+   Élargissement des conteneurs — moins de vide sur les côtés
+   ============================================================ */
+.hero{max-width:900px;}
+.status-strip{max-width:760px;}
+.page-head{max-width:760px;}
+.content{max-width:840px;}
+.card-list{
+  max-width:1100px;
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:16px;
+}
+.breadcrumb{max-width:900px;}
+.article-head{max-width:900px;}
+.layout{max-width:1160px;grid-template-columns:1fr 220px;}
+.thread{max-width:840px;}
+
+@media (max-width:900px){
+  .card-list{grid-template-columns:1fr;}
+}
