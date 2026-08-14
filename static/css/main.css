@@ -12,8 +12,8 @@
   --line-soft:#1a2029;
   --signal:#00e5a0;
   --signal-dim:#0a3d30;
-  --pulse:#ff8a4c;
-  --pulse-dim:#3d2413;
+  --pulse:#5b9bff;
+  --pulse-dim:#122238;
   --blue:#5b9bff;
   --blue-dim:#122238;
   --ink:#e4e8ef;
@@ -73,8 +73,8 @@ h1 .accent{color:var(--pulse);}
 .lede strong{color:var(--ink);font-weight:500;}
 .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px;}
 .btn{font-family:var(--font-mono);font-size:13px;padding:12px 22px;border-radius:6px;border:1px solid var(--line);transition:all .15s ease;display:inline-flex;align-items:center;gap:8px;}
-.btn-primary{background:var(--pulse);color:#1a0f05;border-color:var(--pulse);font-weight:500;}
-.btn-primary:hover{background:#ff9a63;}
+.btn-primary{background:var(--pulse);color:#081420;border-color:var(--pulse);font-weight:500;}
+.btn-primary:hover{background:#7bafff;}
 .btn-ghost{color:var(--ink);}
 .btn-ghost:hover{border-color:var(--dim-2);background:var(--surface);}
 
@@ -109,7 +109,7 @@ h1 .accent{color:var(--pulse);}
 .card:hover{border-color:var(--dim-2);}
 .card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
 .badge{font-family:var(--font-mono);font-size:11px;padding:3px 9px;border-radius:5px;letter-spacing:.04em;}
-.badge.aws{color:#ffb673;background:var(--pulse-dim);}
+.badge.aws{color:#7bafff;background:var(--pulse-dim);}
 .badge.sec{color:#5b9bff;background:var(--blue-dim);}
 .badge.infra{color:#00e5a0;background:var(--signal-dim);}
 .card-date{font-family:var(--font-mono);font-size:11px;color:var(--dim);margin-left:auto;}
