@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Heil Tchamba Nana{% endblock %}</title>
+<meta name="description" content="{% block description %}{% endblock %}">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="{% block og_title %}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{% endblock %}">
+<meta property="og:url" content="{% block og_url %}{% endblock %}">
+{% block og_image %}{% endblock %}
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="{% block canonical %}{% endblock %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="{% load static %}{% static 'css/main.css' %}" rel="stylesheet">
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<header class="topbar">
+  <a href="{{ site_url }}" class="brand"><span class="brand-dot"></span>heil@devsecops:~$</a>
+  <nav class="nav">
+    <a href="{{ site_url }}">home</a>
+    <a href="{{ site_url }}/about">about</a>
+    <a href="{{ site_url }}/walkthroughs" {% if pipeline_stage == 'build' %}class="active"{% endif %}>walkthroughs</a>
+    <a href="{{ site_url }}/notes" {% if pipeline_stage == 'log' %}class="active"{% endif %}>notes</a>
+  </nav>
+</header>
+
+<nav class="pipeline" aria-label="Progression du site">
+  <div class="pipeline-track">
+    <div class="stage done"><div class="stage-node"></div><div class="stage-label">Origin</div></div>
+    <div class="connector done"></div>
+    <div class="stage done"><div class="stage-node"></div><div class="stage-label">Profile</div></div>
+    <div class="connector done"></div>
+    <div class="stage {% if pipeline_stage == 'build' %}current{% else %}done{% endif %}"><div class="stage-node"></div><div class="stage-label">Build</div></div>
+    <div class="connector {% if pipeline_stage == 'log' %}done{% endif %}"></div>
+    <div class="stage {% if pipeline_stage == 'log' %}current{% endif %}"><div class="stage-node"></div><div class="stage-label">Log</div></div>
+  </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer class="footer">
+  <span>heil tchamba nana — yaoundé, cameroun</span>
+  <div class="footer-links">
+    <a href="{{ site_url }}">accueil</a>
+    <a href="mailto:hello@heiltn.dev">contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

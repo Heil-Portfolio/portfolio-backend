@@ -9,6 +9,7 @@ class WalkthroughListSerializer(serializers.ModelSerializer):
 
 class WalkthroughDetailSerializer(serializers.ModelSerializer):
     content_html = serializers.SerializerMethodField()
+    source_note_info = serializers.SerializerMethodField()
 
     class Meta:
         model = Walkthrough
@@ -21,3 +22,12 @@ class WalkthroughDetailSerializer(serializers.ModelSerializer):
             obj.content,
             extensions=['fenced_code', 'tables', 'nl2br', 'sane_lists']
         )
+
+    def get_source_note_info(self, obj):
+        if not obj.source_note or not obj.source_note.published:
+            return None
+        return {
+            'title': obj.source_note.title,
+            'slug': obj.source_note.slug,
+            'entry_date': obj.source_note.entry_date,
+        }

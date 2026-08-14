@@ -13,6 +13,10 @@ class WalkthroughAdmin(admin.ModelAdmin):
         ('Identity', {
             'fields': ('title', 'slug', 'status', 'tags', 'reading_time', 'published_at')
         }),
+        ('Origine', {
+            'fields': ('source_note',),
+            'description': 'Si ce walkthrough est né d\'une note du journal, lie-la ici pour le renvoi croisé.'
+        }),
         ('Structure', {
             'fields': ('objective', 'stack', 'architecture', 'problems_encountered', 'lessons_learned')
         }),

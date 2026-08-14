@@ -1,0 +1,91 @@
+{% extends "base_article.html" %}
+{% load static %}
+
+{% block title %}{{ walkthrough.title }} — Heil Tchamba Nana{% endblock %}
+{% block description %}{{ walkthrough.objective|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ walkthrough.title }}{% endblock %}
+{% block og_description %}{{ walkthrough.objective|truncatewords:30 }}{% endblock %}
+{% block og_url %}{{ site_url }}/walkthroughs/{{ walkthrough.slug }}{% endblock %}
+{% block canonical %}{{ site_url }}/walkthroughs/{{ walkthrough.slug }}{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb">
+  <a href="{{ site_url }}/walkthroughs">walkthroughs</a><span class="sep">/</span>{{ walkthrough.slug }}
+</div>
+
+<div class="article-head">
+  <div class="badges">
+    {% for tag in walkthrough.tags %}
+      <span class="badge infra">{{ tag }}</span>
+    {% endfor %}
+  </div>
+  <h1>{{ walkthrough.title }}</h1>
+  <div class="article-meta">
+    {% if walkthrough.published_at %}<span>{{ walkthrough.published_at|date:"d M Y" }}</span>{% endif %}
+    <span>{{ walkthrough.reading_time }} min de lecture</span>
+    <span>Heil Tchamba Nana</span>
+  </div>
+</div>
+
+<div class="layout">
+  <article class="article-body">
+
+    <h2>Le problème</h2>
+    <p>{{ walkthrough.objective }}</p>
+
+    {% if walkthrough.stack %}
+    <div class="callout">
+      <span class="label">Stack</span>
+      {{ walkthrough.stack }}
+    </div>
+    {% endif %}
+
+    {% if walkthrough.architecture %}
+    <h2>Architecture</h2>
+    <p>{{ walkthrough.architecture }}</p>
+    {% endif %}
+
+    {{ walkthrough.content_html|safe }}
+
+    {% if walkthrough.problems_encountered %}
+    <h2>Ce qui a résisté</h2>
+    <p>{{ walkthrough.problems_encountered }}</p>
+    {% endif %}
+
+    {% if walkthrough.lessons_learned %}
+    <h2>Ce qu'il faut en retenir</h2>
+    <ul>
+      {% for lesson in walkthrough.lessons_learned %}<li>{{ lesson }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if walkthrough.source_note_info %}
+    <div class="origin-note">
+      Cet article est né d'une note du {{ walkthrough.source_note_info.entry_date|date:"d M Y" }}.
+      <a href="{{ site_url }}/notes/{{ walkthrough.source_note_info.slug }}">Voir l'entrée brute →</a>
+    </div>
+    {% endif %}
+
+  </article>
+</div>
+
+<div class="thread">
+  <a href="{{ site_url }}/notes" class="thread-card">
+    <div class="thread-text">
+      <div class="eyebrow">→ suite logique</div>
+      <div class="title">Le brut derrière les articles</div>
+      <div class="sub">Notes</div>
+    </div>
+    <div class="thread-arrow">→</div>
+  </a>
+  <a href="{{ site_url }}/walkthroughs" class="thread-card">
+    <div class="thread-text back">
+      <div class="eyebrow">← retour</div>
+      <div class="title">Tous les walkthroughs</div>
+    </div>
+    <div class="thread-arrow">←</div>
+  </a>
+</div>
+
+{% endblock %}

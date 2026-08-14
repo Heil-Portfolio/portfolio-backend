@@ -20,6 +20,11 @@ class Walkthrough(models.Model):
     obsidian_file = models.CharField(max_length=500, blank=True,
         help_text="Chemin relatif dans le vault : walkthroughs/aws-ec2.md")
     reading_time = models.PositiveIntegerField(default=0, help_text="Minutes")
+    source_note = models.ForeignKey(
+        'journal.JournalEntry', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='became_walkthroughs',
+        help_text="La note brute dont ce walkthrough est issu, si applicable"
+    )
     published_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

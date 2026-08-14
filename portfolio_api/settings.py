@@ -40,7 +40,7 @@ ROOT_URLCONF = 'portfolio_api.urls'
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    'DIRS': [],
+    'DIRS': [BASE_DIR / 'templates'],
     'APP_DIRS': True,
     'OPTIONS': {'context_processors': [
         'django.template.context_processors.debug',
@@ -71,6 +71,11 @@ CONTENT_DIR = BASE_DIR / 'content'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Domaine du frontend statique (Vercel) — utilisé pour générer les liens
+# "retour au site" et pour construire les URLs canoniques absolues.
+SITE_URL = os.environ.get('SITE_URL', 'https://heiltn.dev')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from apps.walkthroughs.views import walkthrough_detail_page
+from apps.journal.views import note_detail_page
 
 
 @api_view(['GET'])
@@ -26,6 +28,10 @@ def api_root(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Pages détail server-rendues — URLs propres et partageables,
+    # rendues accessibles sur le domaine principal via un rewrite Vercel.
+    path('walkthroughs/<slug:slug>/', walkthrough_detail_page, name='walkthrough-detail-page'),
+    path('notes/<slug:slug>/', note_detail_page, name='note-detail-page'),
     path('api/', api_root),
     path('api/', include('apps.skills.urls')),
     path('api/', include('apps.projects.urls')),

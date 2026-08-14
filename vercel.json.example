@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/walkthroughs/:slug", "destination": "https://portfolio-backend-3qxp.onrender.com/walkthroughs/:slug/" },
+    { "source": "/notes/:slug", "destination": "https://portfolio-backend-3qxp.onrender.com/notes/:slug/" }
+  ]
+}

@@ -1,0 +1,62 @@
+{% extends "base_article.html" %}
+
+{% block title %}{{ note.title }} — Heil Tchamba Nana{% endblock %}
+{% block description %}{{ note.content|truncatewords:30 }}{% endblock %}
+{% block og_title %}{{ note.title }}{% endblock %}
+{% block og_description %}{{ note.content|truncatewords:30 }}{% endblock %}
+{% block og_url %}{{ site_url }}/notes/{{ note.slug }}{% endblock %}
+{% block canonical %}{{ site_url }}/notes/{{ note.slug }}{% endblock %}
+
+{% block content %}
+
+<div class="breadcrumb"><a href="{{ site_url }}/notes">notes</a><span class="sep">/</span>{{ note.slug }}</div>
+
+<div class="article-head">
+  <h1>{{ note.title }}</h1>
+  <div class="article-meta">
+    <span>{{ note.entry_date|date:"d M Y" }}</span>
+  </div>
+</div>
+
+<div class="article-body note-body">
+  {{ note.content_html|safe }}
+
+  {% if note.tags %}
+  <div class="log-tags">
+    {% for tag in note.tags %}<span class="log-tag">{{ tag }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% if became_walkthrough %}
+<div class="became">
+  <a href="{{ site_url }}/walkthroughs/{{ became_walkthrough.slug }}" class="became-card">
+    <div>
+      <div class="label">devenu un walkthrough</div>
+      <div class="t">{{ became_walkthrough.title }}</div>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+</div>
+{% endif %}
+
+<div class="adjacent">
+  {% if prev_note %}
+    <a href="{{ site_url }}/notes/{{ prev_note.slug }}" class="prev"><span class="k">← précédent</span>{{ prev_note.title }}</a>
+  {% else %}<span></span>{% endif %}
+  {% if next_note %}
+    <a href="{{ site_url }}/notes/{{ next_note.slug }}" class="next"><span class="k">suivant →</span>{{ next_note.title }}</a>
+  {% else %}<span></span>{% endif %}
+</div>
+
+<div class="thread">
+  <a href="{{ site_url }}/notes" class="thread-card">
+    <div class="thread-text">
+      <div class="eyebrow">retour</div>
+      <div class="title">Toutes les notes</div>
+    </div>
+    <div class="thread-arrow">←</div>
+  </a>
+</div>
+
+{% endblock %}
