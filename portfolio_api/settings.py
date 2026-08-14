@@ -75,7 +75,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Domaine du frontend statique (Vercel) — utilisé pour générer les liens
 # "retour au site" et pour construire les URLs canoniques absolues.
-SITE_URL = os.environ.get('SITE_URL', 'https://heiltn.dev')
+SITE_URL = os.environ.get('SITE_URL', 'https://portfolio-frontend2-three.vercel.app')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
