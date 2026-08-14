@@ -26,7 +26,6 @@
   <a href="{{ site_url }}" class="brand"><span class="brand-dot"></span>heil@devsecops:~$</a>
   <nav class="nav">
     <a href="{{ site_url }}">home</a>
-    <a href="{{ site_url }}/about">about</a>
     <a href="{{ site_url }}/walkthroughs" {% if pipeline_stage == 'build' %}class="active"{% endif %}>walkthroughs</a>
     <a href="{{ site_url }}/notes" {% if pipeline_stage == 'log' %}class="active"{% endif %}>notes</a>
   </nav>
@@ -35,8 +34,6 @@
 <nav class="pipeline" aria-label="Progression du site">
   <div class="pipeline-track">
     <div class="stage done"><div class="stage-node"></div><div class="stage-label">Origin</div></div>
-    <div class="connector done"></div>
-    <div class="stage done"><div class="stage-node"></div><div class="stage-label">Profile</div></div>
     <div class="connector done"></div>
     <div class="stage {% if pipeline_stage == 'build' %}current{% else %}done{% endif %}"><div class="stage-node"></div><div class="stage-label">Build</div></div>
     <div class="connector {% if pipeline_stage == 'log' %}done{% endif %}"></div>
