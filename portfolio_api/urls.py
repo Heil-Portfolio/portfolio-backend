@@ -27,22 +27,25 @@ def api_root(request):
     })
 
 
-# Ordre fixe du curriculum (manuel DevOps/DevSecOps de l'utilisateur).
-# Ne change jamais tout seul — c'est une référence stable, pas une donnée
-# à éditer. Le statut de chaque techno se déduit automatiquement des tags
-# utilisés dans les walkthroughs/notes publiés, zéro entretien manuel.
+# Curriculum à deux niveaux : chaque sujet a une liste de synonymes (tags
+# précis qui comptent comme preuve pour ce sujet). Référence stable, éditée
+# rarement — pas une donnée que l'utilisateur touche au quotidien.
 STACK_CURRICULUM = [
-    ('linux', 'linux.service'),
-    ('git', 'git.service'),
-    ('docker', 'docker.service'),
-    ('kubernetes', 'kubernetes.service'),
-    ('terraform', 'terraform.service'),
-    ('ansible', 'ansible.service'),
-    ('ci/cd', 'cicd.service'),
-    ('monitoring', 'monitoring.service'),
-    ('devsecops', 'devsecops.service'),
-    ('cloud', 'cloud.service'),
-    ('cybersécurité', 'security.service'),
+    {'key': 'linux', 'label': 'Linux', 'synonyms': ['linux']},
+    {'key': 'git', 'label': 'Git', 'synonyms': ['git', 'github', 'gitlab']},
+    {'key': 'docker', 'label': 'Docker', 'synonyms': ['docker', 'container', 'conteneur']},
+    {'key': 'kubernetes', 'label': 'Kubernetes', 'synonyms': ['kubernetes', 'k8s']},
+    {'key': 'terraform', 'label': 'Terraform', 'synonyms': ['terraform']},
+    {'key': 'ansible', 'label': 'Ansible', 'synonyms': ['ansible']},
+    {'key': 'cicd', 'label': 'CI/CD', 'synonyms': ['ci/cd', 'cicd', 'ci-cd', 'github actions', 'gitlab ci']},
+    {'key': 'monitoring', 'label': 'Monitoring', 'synonyms': ['monitoring', 'observabilité', 'observability']},
+    {'key': 'devsecops', 'label': 'DevSecOps', 'synonyms': ['devsecops', 'sécurité', 'security', 'firewall', 'crowdsec', 'fail2ban']},
+    {'key': 'cloud', 'label': 'Cloud', 'synonyms': ['cloud', 'aws', 'gcp', 'azure', 'ec2', 's3']},
+    {'key': 'cybersecurite', 'label': 'Cybersécurité', 'synonyms': ['cybersécurité', 'cybersecurity']},
+    {'key': 'architecture', 'label': 'Architecture & Systèmes distribués', 'synonyms': [
+        'architecture', 'microservices', 'service-discovery', 'messaging',
+        'eureka', 'rabbitmq', 'kafka', 'distributed-systems',
+    ]},
 ]
 QUEUED_LIMIT = 3
 ACTIVE_LIMIT = 6
@@ -52,9 +55,9 @@ MASTERED_THRESHOLD = 5  # walkthroughs requis sur un sujet avant de le dire "mas
 
 @api_view(['GET'])
 def curriculum_order(request):
-    """Ordre fixe du curriculum, exposé pour que le frontend puisse grouper
-    les walkthroughs/notes par sujet sans dupliquer la liste."""
-    return Response([{'key': key, 'label': key} for key, _ in STACK_CURRICULUM])
+    """Ordre + synonymes du curriculum, exposé pour que le frontend groupe
+    et sous-groupe les walkthroughs/notes sans dupliquer la liste."""
+    return Response(STACK_CURRICULUM)
 
 
 @api_view(['GET'])
@@ -62,27 +65,29 @@ def stack_status(request):
     from apps.walkthroughs.models import Walkthrough
     from apps.journal.models import JournalEntry
 
-    def tags_for(qs):
-        tags = []
-        for item in qs:
-            tags += [t.lower() for t in (item.tags or [])]
-        return tags
+    walkthroughs = list(Walkthrough.objects.filter(status='published'))
+    notes = list(JournalEntry.objects.filter(published=True))
 
-    wt_tags = tags_for(Walkthrough.objects.filter(status='published'))
-    note_tags = tags_for(JournalEntry.objects.filter(published=True))
+    def matches(item, synonyms):
+        tags = [t.lower() for t in (item.tags or [])]
+        return any(s in tags for s in synonyms)
 
     active, learning, queued = [], [], []
-    for key, service in STACK_CURRICULUM:
-        wt_count = wt_tags.count(key)
-        note_count = note_tags.count(key)
+    for topic in STACK_CURRICULUM:
+        synonyms = topic['synonyms']
+        # Un item ne compte qu'une fois, même s'il porte plusieurs synonymes
+        # du même sujet (évite le gonflement par tag-stuffing).
+        wt_count = sum(1 for w in walkthroughs if matches(w, synonyms))
+        note_count = sum(1 for n in notes if matches(n, synonyms))
+        service = f"{topic['key']}.service"
         if wt_count >= MASTERED_THRESHOLD:
-            active.append({'service': service, 'label': key, 'status': 'active (mastered)', 'count': wt_count, 'unit': 'walkthrough'})
+            active.append({'service': service, 'label': topic['label'], 'status': 'active (mastered)', 'count': wt_count, 'unit': 'walkthrough'})
         elif wt_count > 0:
-            learning.append({'service': service, 'label': key, 'status': 'activating (learning)', 'count': wt_count, 'unit': 'walkthrough'})
+            learning.append({'service': service, 'label': topic['label'], 'status': 'activating (learning)', 'count': wt_count, 'unit': 'walkthrough'})
         elif note_count > 0:
-            learning.append({'service': service, 'label': key, 'status': 'activating (learning)', 'count': note_count, 'unit': 'note'})
+            learning.append({'service': service, 'label': topic['label'], 'status': 'activating (learning)', 'count': note_count, 'unit': 'note'})
         else:
-            queued.append({'service': service, 'label': key, 'status': 'inactive (queued)', 'count': 0})
+            queued.append({'service': service, 'label': topic['label'], 'status': 'inactive (queued)', 'count': 0})
 
     active.sort(key=lambda x: -x['count'])
     learning.sort(key=lambda x: -x['count'])
