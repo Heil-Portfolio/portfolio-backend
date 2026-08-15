@@ -47,6 +47,7 @@ STACK_CURRICULUM = [
 QUEUED_LIMIT = 3
 ACTIVE_LIMIT = 6
 LEARNING_LIMIT = 3
+MASTERED_THRESHOLD = 5  # walkthroughs requis sur un sujet avant de le dire "mastered"
 
 
 @api_view(['GET'])
@@ -67,8 +68,10 @@ def stack_status(request):
     for key, service in STACK_CURRICULUM:
         wt_count = wt_tags.count(key)
         note_count = note_tags.count(key)
-        if wt_count > 0:
+        if wt_count >= MASTERED_THRESHOLD:
             active.append({'service': service, 'label': key, 'status': 'active (mastered)', 'count': wt_count, 'unit': 'walkthrough'})
+        elif wt_count > 0:
+            learning.append({'service': service, 'label': key, 'status': 'activating (learning)', 'count': wt_count, 'unit': 'walkthrough'})
         elif note_count > 0:
             learning.append({'service': service, 'label': key, 'status': 'activating (learning)', 'count': note_count, 'unit': 'note'})
         else:
