@@ -81,6 +81,21 @@ a{color:inherit;text-decoration:none;}
   background:var(--signal);border:3px solid var(--void);
   box-shadow:0 0 0 2px var(--signal-dim);
 }
+
+/* stack status widget */
+.stack-widget{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 26px;font-family:var(--font-mono);font-size:13px;}
+.stack-widget .stack-cmd{color:var(--dim);margin-bottom:14px;}
+.stack-widget .stack-cmd .prompt{color:var(--signal);}
+.stack-row{display:flex;align-items:center;gap:10px;padding:6px 0;flex-wrap:wrap;}
+.stack-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.stack-dot.mastered{background:var(--signal);box-shadow:0 0 0 3px var(--signal-dim);}
+.stack-dot.learning{background:var(--pulse);box-shadow:0 0 0 3px var(--pulse-dim);animation:pulse 2s ease-in-out infinite;}
+.stack-dot.queued{background:var(--dim-2);}
+.stack-service{color:var(--ink);min-width:150px;}
+.stack-status-text{color:var(--dim);}
+.stack-status-text.mastered{color:var(--signal);}
+.stack-status-text.learning{color:var(--pulse);}
+.stack-evidence{color:var(--dim-2);margin-left:auto;font-size:12px;}
 h1{font-family:var(--font-display);font-weight:600;font-size:44px;line-height:1.15;letter-spacing:-.01em;margin-bottom:20px;}
 h1 .accent{color:var(--pulse);}
 .lede{font-size:17px;color:var(--dim);max-width:520px;margin:0 auto 32px;line-height:1.65;}
