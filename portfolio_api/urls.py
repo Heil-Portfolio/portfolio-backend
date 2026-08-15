@@ -51,6 +51,13 @@ MASTERED_THRESHOLD = 5  # walkthroughs requis sur un sujet avant de le dire "mas
 
 
 @api_view(['GET'])
+def curriculum_order(request):
+    """Ordre fixe du curriculum, exposé pour que le frontend puisse grouper
+    les walkthroughs/notes par sujet sans dupliquer la liste."""
+    return Response([{'key': key, 'label': key} for key, _ in STACK_CURRICULUM])
+
+
+@api_view(['GET'])
 def stack_status(request):
     from apps.walkthroughs.models import Walkthrough
     from apps.journal.models import JournalEntry
@@ -95,6 +102,7 @@ urlpatterns = [
     path('notes/<slug:slug>/', note_detail_page, name='note-detail-page'),
     path('api/', api_root),
     path('api/stack/', stack_status),
+    path('api/curriculum/', curriculum_order),
     path('api/', include('apps.skills.urls')),
     path('api/', include('apps.projects.urls')),
     path('api/', include('apps.walkthroughs.urls')),
