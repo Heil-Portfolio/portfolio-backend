@@ -26,8 +26,10 @@
   <a href="{{ site_url }}" class="brand"><span class="brand-dot"></span>heil@devsecops:~$</a>
   <nav class="nav">
     <a href="{{ site_url }}">home</a>
-    <a href="{{ site_url }}/walkthroughs" {% if pipeline_stage == 'build' %}class="active"{% endif %}>walkthroughs</a>
-    <a href="{{ site_url }}/notes" {% if pipeline_stage == 'log' %}class="active"{% endif %}>notes</a>
+    <a href="{{ site_url }}/walkthroughs.html" {% if pipeline_stage == 'build' %}class="active"{% endif %}>walkthroughs</a>
+    {% if pipeline_stage != 'build' %}
+    <a href="{{ site_url }}/notes.html" {% if pipeline_stage == 'log' %}class="active"{% endif %}>notes</a>
+    {% endif %}
   </nav>
 </header>
 
